@@ -1,0 +1,23 @@
+.header-img {
+height: 14rem;
+}
+
+@media (min-width: 768px) {
+.header-img {
+    height: 20rem;
+}
+}
+
+.map-box {
+height: 20rem;
+}
+
+@media (min-width: 768px) {
+.map-box {
+    height: 22rem;
+}
+}
+
+.icon-map {
+transform: translate(-50%, -90%);
+}
