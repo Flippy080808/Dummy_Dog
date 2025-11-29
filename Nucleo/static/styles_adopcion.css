@@ -1,0 +1,13 @@
+body {
+    background-color: hwb(195 54% 10%);
+}
+
+h1 {
+    color: #003366;
+    font-weight: 700;
+}
+
+p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
