@@ -1,0 +1,140 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #4CE64C;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+}
+
+.card {
+    background: #FCFA86;
+    width: 900px;
+    display: flex;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.left {
+    width: 19%;
+    padding-right: 20px;
+}
+
+.left img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.price-section {
+    margin-top: 10px;
+}
+
+.old-price {
+    text-decoration: line-through;
+    color: #777;
+}
+
+.price {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+}
+
+.discount {
+    background: #d4f4dd;
+    color: #0a8a26;
+    font-weight: bold;
+    padding: 4px 7px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.btn {
+    background: #3483fa;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.btn:hover {
+    background: #2968c8;
+}
+
+.secondary {
+    background: #eeeeee;
+    color: #333;
+}
+
+.secondary:hover {
+    background: #d5d5d5;
+}
+
+/* --- SECCIÓN DE INFORMACIÓN DEL PRODUCTO --- */
+.info-section {
+    width: 900px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.info-section h3 {
+    margin-top: 0;
+}
+
+/* --- RECOMENDADOS --- */
+.recommended {
+    width: 900px;
+    margin: 20px auto;
+}
+
+.recommended h3 {
+    margin-bottom: 10px;
+}
+
+.rec-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.rec-item {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+}
+
+.rec-item img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.rec-title {
+    font-size: 14px;
+    margin: 10px 0 5px;
+    color: #333;
+}
+
+.rec-price {
+    font-weight: bold;
+    color: #2c7;
+}
