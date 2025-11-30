@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
-
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de Producto</title>
 
-    <!-- Enlace al archivo CSS -->
-    <link rel="stylesheet" href="/Nucleo/static/style_producto.css">
+    <!-- Enlace al archivo CSS usando el tag static -->
+    <link rel="stylesheet" href="{% static 'styles_producto.css' %}">
 </head>
 
 <body>

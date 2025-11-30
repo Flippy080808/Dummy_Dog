@@ -17,3 +17,12 @@ def veter(request):
 
 def serv(request):
     return render(request, 'serv.html')
+
+def producto(request):
+    return render(request, 'producto.html')
+
+def cuidador(request):
+    return render(request, 'cuidador.html')
+
+def adopcion(request):
+    return render(request, 'adopcion.html')
