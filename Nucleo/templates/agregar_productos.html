@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Agregar Producto - Dummy Dog</title>
+    <link rel="stylesheet" href="{% static 'styles_agregar_producto.css' %}">
+    <link rel="stylesheet" href="{% static 'global.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="container">
+        <div class="form-card">
+            <div class="form-left">
+                <img src="https://cdn-icons-png.flaticon.com/512/4014/4014564.png" alt="Dummy Dog">
+                <h2>Nuevo Producto</h2>
+                <p style="text-align:center; max-width:220px; margin-top:10px; font-size:14px;">
+                    Agrega productos fácilmente. Completa los campos y pulsa Guardar.
+                </p>
+            </div>
+
+            <div class="form-body">
+                <h3 style="margin-top:0;">Formulario de creación</h3>
+
+                <form method="post" novalidate>
+                    {% csrf_token %}
+
+                    {% if form.non_field_errors %}
+                        <div class="errors">{{ form.non_field_errors }}</div>
+                    {% endif %}
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="{{ form.nombre.id_for_label }}">Nombre</label>
+                            {{ form.nombre }}
+                            {% if form.nombre.errors %}<div class="errors">{{ form.nombre.errors }}</div>{% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.marca.id_for_label }}">Marca</label>
+                            {{ form.marca }}
+                            {% if form.marca.errors %}<div class="errors">{{ form.marca.errors }}</div>{% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.precio.id_for_label }}">Precio</label>
+                            {{ form.precio }}
+                            {% if form.precio.errors %}<div class="errors">{{ form.precio.errors }}</div>{% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.inventario.id_for_label }}">Inventario</label>
+                            {{ form.inventario }}
+                            {% if form.inventario.errors %}<div class="errors">{{ form.inventario.errors }}</div>{% endif %}
+                        </div>
+
+                        <div class="form-group full-row">
+                            <label for="{{ form.categoria.id_for_label }}">Categoría</label>
+                            {{ form.categoria }}
+                            {% if form.categoria.errors %}<div class="errors">{{ form.categoria.errors }}</div>{% endif %}
+                        </div>
+
+                        <div class="form-group full-row">
+                            <label for="{{ form.id_veter.id_for_label }}">ID Veterinaria</label>
+                            {{ form.id_veter }}
+                            {% if form.id_veter.errors %}<div class="errors">{{ form.id_veter.errors }}</div>{% endif %}
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a href="/" class="btn btn-secondary" style="display:inline-flex;align-items:center;justify-content:center;text-decoration:none;">Cancelar</a>
+                    </div>
+
+                    <div class="form-note">
+                        Nota: Los campos Marca y Categoría son opcionales.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

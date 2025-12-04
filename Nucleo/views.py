@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import requests #type: ignore
+from .forms import ProductoForm
 
 def index(request):    
     url = "https://mocki.io/v1/294fd412-661e-46d1-a0bf-647e1f59fa53"
@@ -26,3 +27,13 @@ def cuidador(request):
 
 def adopcion(request):
     return render(request, 'adopcion.html')
+
+def crear_producto(request):
+    if request.method == 'POST':
+        form = ProductoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('agregar_producto')  # recarga el formulario vacío; cambiar destino si se desea
+    else:
+        form = ProductoForm()
+    return render(request, 'agregar_productos.html', {'form': form})
