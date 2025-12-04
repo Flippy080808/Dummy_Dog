@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 import requests #type: ignore
 from .forms import ProductoForm
+from .models import Producto
 
 def index(request):    
     url = "https://mocki.io/v1/294fd412-661e-46d1-a0bf-647e1f59fa53"
@@ -37,3 +38,17 @@ def crear_producto(request):
     else:
         form = ProductoForm()
     return render(request, 'agregar_productos.html', {'form': form})
+
+
+
+
+def buscar_productos(request):
+    q = request.GET.get('consulta_de_productos', '')
+    resultados = []
+    if q:
+        resultados = Producto.objects.filter(
+            nombre__icontains=q
+        ) | Producto.objects.filter(
+            marca__icontains=q
+        )
+    return render(request, 'buscar.html', {'resultados': resultados})

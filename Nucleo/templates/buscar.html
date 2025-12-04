@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar</title>
+</head>
+<body>
+    <h1>Buscador producto:</h1>
+
+    <form action="" method="get">
+        <label>Buscar por Nombre o por marca del producto:</label>
+        <input type="text" name="consulta_de_productos" placeholder="Ej. Alimento o pedigri..." required>
+        <input type="submit" value="Buscar">
+    </form>
+
+    <hr>
+
+    <h2>Resultados:</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Marca</th>
+                <th>Precio</th>
+                <th>Inventario</th>
+                <th>Categoria</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in resultados %}
+                <tr>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.marca }}</td>
+                    <td>{{ producto.precio }}</td>
+                    <td>{{ producto.inventario }}</td>
+                    <td>{{ producto.categoria }}</td>
+                   
+                    <td>
+                        <a href="/editar_producto/{{ producto.id }}">Editar</a>
+                    </td>
+                    <td>
+                        <a href="/eliminar_producto/{{ producto.id }}">Eliminar</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No se encontraron productos con ese criterio.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
