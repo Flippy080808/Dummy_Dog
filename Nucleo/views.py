@@ -29,6 +29,7 @@ def cuidador(request):
 def adopcion(request):
     return render(request, 'adopcion.html')
 
+# Autor Alberto GJ
 def crear_producto(request):
     if request.method == 'POST':
         form = ProductoForm(request.POST)
@@ -41,7 +42,7 @@ def crear_producto(request):
 
 
 
-
+#Autor Jose FDA
 def buscar_productos(request):
     q = request.GET.get('consulta_de_productos', '')
     resultados = []
@@ -52,3 +53,23 @@ def buscar_productos(request):
             marca__icontains=q
         )
     return render(request, 'buscar.html', {'resultados': resultados})
+
+
+def editar_producto(request, producto_id):
+    producto = Producto.objects.get(pk=producto_id)
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, instance=producto)
+        if form.is_valid():
+            form.save()
+            return redirect('buscar_productos')
+    else:
+        form = ProductoForm(instance=producto)
+    return render(request, 'editar_producto.html', {'form': form, 'producto': producto})
+
+
+def eliminar_producto(request, producto_id):
+    producto = Producto.objects.get(pk=producto_id)
+    if request.method == 'POST':
+        producto.delete()
+        return redirect('buscar_productos')
+    return render(request, 'eliminar_producto.html', {'producto': producto})
