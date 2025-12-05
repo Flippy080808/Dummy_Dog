@@ -1,56 +1,231 @@
+<!--Autor de la plantilla Angela GH-->
+
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Buscar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Productos</title>
+    <style>
+        /* Importación de fuente moderna */
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-color: #007bff; /* Azul primario */
+            --secondary-color: #6c757d; /* Gris secundario */
+            --success-color: #28a745; /* Verde para Editar */
+            --danger-color: #dc3545; /* Rojo para Eliminar */
+            --background-color: #f8f9fa; /* Fondo muy claro */
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --border-radius: 8px;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            background-color: var(--card-background);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+        
+        h2 {
+            color: var(--text-color);
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 10px;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* --- Estilos del Formulario de Búsqueda --- */
+        form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+        }
+
+        form label {
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        form input[type="text"] {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            transition: border-color 0.3s;
+            max-width: 350px;
+        }
+
+        form input[type="text"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        form input[type="submit"] {
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* --- Estilos de la Tabla de Resultados --- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            /* Eliminamos 'border="1"' del HTML y usamos CSS */
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        thead th {
+            background-color: #e9ecef;
+            color: var(--text-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Estilo para la fila de vacío */
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+        
+        td {
+            font-size: 0.95rem;
+        }
+
+        /* Estilo para las Celdas de Acción */
+        td a {
+            text-decoration: none;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-weight: 600;
+            display: inline-block;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        
+        td a:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        /* Estilos específicos para los botones de acción */
+        td a[href*="editar_producto"] {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        td a[href*="eliminar_producto"] {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        /* Estilo para cuando no hay resultados */
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            background-color: #fff3cd; /* Amarillo suave de advertencia */
+            color: var(--warning-text);
+        }
+        
+    </style>
 </head>
 <body>
-    <h1>Buscador producto:</h1>
+    <div class="container">
+        <h1>Buscador y Administración de Productos</h1>
 
-    <form action="" method="get">
-        <label>Buscar por Nombre o por marca del producto:</label>
-        <input type="text" name="consulta_de_productos" placeholder="Ej. Alimento o pedigri..." required>
-        <input type="submit" value="Buscar">
-    </form>
+        <form action="" method="get">
+            <label for="consulta_productos">Buscar por Nombre o por marca del producto:</label>
+            <input type="text" id="consulta_productos" name="consulta_de_productos" placeholder="Ej. Alimento, Pedigri, Juguete..." required>
+            <input type="submit" value="Buscar">
+        </form>
 
-    <hr>
+        <h2>Resultados de la Búsqueda</h2>
 
-    <h2>Resultados:</h2>
-
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Marca</th>
-                <th>Precio</th>
-                <th>Inventario</th>
-                <th>Categoria</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for producto in resultados %}
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ producto.nombre }}</td>
-                    <td>{{ producto.marca }}</td>
-                    <td>{{ producto.precio }}</td>
-                    <td>{{ producto.inventario }}</td>
-                    <td>{{ producto.categoria }}</td>
-                   
-                    <td>
-                        <a href="/editar_producto/{{ producto.id }}">Editar</a>
-                    </td>
-                    <td>
-                        <a href="/eliminar_producto/{{ producto.id }}">Eliminar</a>
-                    </td>
+                    <th>Nombre</th>
+                    <th>Marca</th>
+                    <th>Precio</th>
+                    <th>Inventario</th>
+                    <th>Categoría</th>
+                    <th colspan="2" style="text-align: center;">Acciones</th>
                 </tr>
-            {% empty %}
-                <tr>
-                    <td colspan="4">No se encontraron productos con ese criterio.</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+            </thead>
+            <tbody>
+                {% for producto in resultados %}
+                    <tr>
+                        <td>{{ producto.nombre }}</td>
+                        <td>{{ producto.marca }}</td>
+                        <td>${{ producto.precio }}</td>
+                        <td>{{ producto.inventario }}</td>
+                        <td>{{ producto.categoria }}</td>
+                        
+                        <td>
+                            <a href="/editar_producto/{{ producto.id_product }}">Editar</a>
+                        </td>
+                        
+                        <td>
+                            <a href="/eliminar_producto/{{ producto.id_product}}">Eliminar</a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7" class="no-results">No se encontraron productos con ese criterio. Intente otra búsqueda.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
