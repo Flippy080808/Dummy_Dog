@@ -1,0 +1,156 @@
+<!--Autor de la plantilla Emily VQ-->
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Producto: {{ producto.nombre }}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+        :root {
+            --primary-color: #4CAF50; 
+            --secondary-color: #2196F3; 
+            --background-color: #f7f7f7;
+            --card-background: #ffffff;
+            --text-color: #333;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background-color: var(--card-background);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        form p {
+            margin-bottom: 15px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        form input[type="text"], 
+        form input[type="number"],
+        form textarea,
+        form select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        form input:focus,
+        form textarea:focus,
+        form select:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 5px rgba(33, 150, 243, 0.3);
+        }
+
+        .button-group {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .btn-success {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #43A047;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #9E9E9E;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #757575;
+            transform: translateY(-1px);
+        }
+        
+        .btn-danger {
+            background-color: #E53935;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #C62828;
+            transform: translateY(-1px);
+        }
+
+        .action-link {
+            margin-top: 20px;
+            display: block;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Editar Producto: {{ producto.nombre }} (ID: {{ producto.id_product }})</h1>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            {{ form.as_p }}
+            
+            <div class="button-group">
+                <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                <a href="/editar_producto/" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+        
+        <div class="action-link">
+            <a href="/eliminar_producto/{{ producto.id_product }}" class="btn-danger btn-sm">Eliminar Producto</a>
+        </div>
+    </div>
+</body>
+</html>
