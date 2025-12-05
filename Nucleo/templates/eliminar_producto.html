@@ -1,0 +1,161 @@
+<!--autores de la plantilla Rosario CG y Madelane OM-->
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Producto: {{ producto.nombre }}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+        :root {
+            --danger-color: #E53935; 
+            --warning-bg: #FFF3CD; 
+            --warning-text: #856404; 
+            --background-color: #f7f7f7;
+            --card-background: #ffffff;
+            --text-color: #333;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background-color: var(--card-background);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--danger-color);
+            border-bottom: 3px solid var(--danger-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            background-color: var(--warning-bg);
+            color: var(--warning-text);
+            font-weight: 500;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: left;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+        
+        .card-text strong {
+            display: inline-block;
+            width: 100px; 
+            font-weight: 500;
+        }
+
+
+        .button-group {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+            font-weight: 700;
+        }
+        
+        .btn-danger:hover {
+            background-color: #C62828;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #9E9E9E;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #757575;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Confirmar Eliminación</h1>
+        
+        <div class="alert" role="alert">
+            <strong>¡Atención!</strong> Esta acción es irreversible. El producto será eliminado permanentemente.
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <p>Estás a punto de eliminar el siguiente producto:</p>
+                <h5 class="card-title">{{ producto.nombre }}</h5>
+                <p class="card-text"><strong>ID:</strong> {{ producto.id_product }}</p>
+                <p class="card-text"><strong>Marca:</strong> {{ producto.marca }}</p>
+                <p class="card-text"><strong>Categoría:</strong> {{ producto.categoria|default_if_none:"N/A" }}</p>
+                <p class="card-text"><strong>Precio:</strong> ${{ producto.precio }}</p>
+                <p class="card-text"><strong>Inventario:</strong> {{ producto.inventario }} unidades</p>
+            </div>
+        </div>
+        
+        <p>¿Estás **seguro** que deseas continuar?</p>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="button-group">
+                <button type="submit" class="btn btn-danger">Sí, Eliminar Permanentemente</button>
+                <a href="{% url 'buscar_productos' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
