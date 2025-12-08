@@ -4,42 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil de Veterinario - Detalle</title>
+    <title>Veterinaria - Dummy Dog</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'global.css' %}">
     <link rel="stylesheet" href="{% static 'styles_veter.css' %}">
-
+    <style>
+        body { padding-top: 60px; }
+        .navbar-custom { background: var(--primary-green) !important; }
+    </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="/">Dummy Dog</a>
+    <nav class="navbar navbar-expand-lg navbar-custom shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">🐶 Dummy Dog</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="/">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Veterinaria">Veterinaria</a>
+                        <a class="nav-link" href="/Veterinaria">Veterinaria</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="servicios">Servicios</a>
+                        <a class="nav-link" href="/servicios">Servicios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="healthypuppy">Healthy Puppy</a>
+                        <a class="nav-link" href="/productos">Productos</a>
                     </li>
                 </ul>
-
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Buscar...">
-                    <button class="btn btn-outline-success" type="submit">Buscar</button>
-                </form>
             </div>
         </div>
     </nav>
@@ -53,7 +51,7 @@
                         <path d="M1 2.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H1.5a.5.5 0 0 1-.5-.5v-2zM2 3v1h12V3H2zm2 3a.5.5 0 0 0 0 1h8a.5.5 0 0 0 0-1H4zm0 2a.5.5 0 0 0 0 1h8a.5.5 0 0 0 0-1H4zm-1 3.5a.5.5 0 0 0 0 1h10a.5.5 0 0 0 0-1H3zm-2 2a.5.5 0 0 0 0 1h14a.5.5 0 0 0 0-1H1z"/>
                     </svg>
                 </div>
-                <img src="https://images.unsplash.com/photo-1588943211346-0908a171017c?q=80&w=800&auto=format&fit=crop" alt="Clínica Veterinaria" class="puppies-image">
+                <img src="https://tse3.mm.bing.net/th/id/OIP.OrTb7ccNwDF4JfH-t7sZhgHaHF?cb=ucfimg2&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Clínica Veterinaria" class="puppies-image">
             </div>
 
             <div class="info-section">
@@ -73,14 +71,10 @@
 
                 <div class="map-wrapper">
                     <span class="section-label">UBICACIÓN DE LA CLÍNICA</span>
-                    <div class="map-box">
-                        <div class="map-placeholder">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#dc3545" class="bi bi-geo-alt-fill mb-2" viewBox="0 0 16 16">
-                                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
-                            </svg>
-                            <span>Clínica Veterinaria (Mapa de Simulación)</span>
-                        </div>
+                    <div class="map-box" style="height:400px;border-radius:10px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3743.565165773726!2d-97.08770892346962!3d20.452506500000004!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85dbb3491f06c419%3A0x44a5ff1ad5c3f5ad!2sVeterinaria%20Orostico!5e0!3m2!1ses!2smx!4v1670000000000" width="100%" height="100%" style="border:none;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
+                    <p style="margin-top:12px;font-size:13px;color:var(--text-muted);">📍 Veterinaria Orostico - Ubicación en Google Maps</p>
                 </div>
 
                 <button class="btn-action" onclick="console.log('Contacto o Cita');">Pedir Cita / Contactar</button>

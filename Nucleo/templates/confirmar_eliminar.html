@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Eliminar producto - Dummy Dog</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'global.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">🐶 Dummy Dog</a>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width:500px;margin:60px auto;">
+        <div class="card" style="border:2px solid #ffebee;">
+            <div style="background:#ffebee;color:#c62828;padding:24px;border-radius:12px 12px 0 0;text-align:center;">
+                <h3 style="margin:0;">⚠️ Eliminar producto</h3>
+            </div>
+
+            <div style="padding:28px;text-align:center;">
+                <p style="font-size:16px;color:var(--gray-dark);margin-bottom:20px;">
+                    ¿Estás seguro de que deseas eliminar el producto:
+                </p>
+                <p style="font-size:20px;font-weight:700;color:var(--primary-green);margin-bottom:20px;">
+                    {{ producto.nombre }}
+                </p>
+                <p style="font-size:13px;color:var(--text-muted);margin-bottom:28px;">
+                    Esta acción no se puede deshacer.
+                </p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div style="display:flex;gap:12px;justify-content:center;">
+                        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+                        <a href="{% url 'productos_list' %}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

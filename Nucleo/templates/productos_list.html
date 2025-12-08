@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Catálogo de Productos - Dummy Dog</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'global.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">🐶 Dummy Dog</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Veterinaria">Veterinaria</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/servicios">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/productos">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'agregar_producto' %}" style="background:white;color:var(--primary-green);padding:6px 12px;border-radius:6px;margin-left:10px;font-weight:600;">+ Agregar</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="container">
+            <h1>Catálogo de Productos</h1>
+            <p>Descubre la mejor selección para tu mascota</p>
+        </div>
+    </div>
+
+    <div class="container">
+        {% if productos %}
+        <div class="grid">
+            {% for p in productos %}
+            <a href="{% url 'producto_detail' p.pk %}" style="text-decoration:none;color:inherit;">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://via.placeholder.com/240x180?text={{ p.nombre|truncatewords:2 }}" alt="{{ p.nombre }}">
+                </div>
+                <div class="product-info">
+                    <div class="product-brand">{{ p.marca|default:"Sin marca" }}</div>
+                    <div class="product-title">{{ p.nombre }}</div>
+                    <div class="product-price">${{ p.precio }}</div>
+                    <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;">
+                        📦 Stock: {{ p.inventario }}
+                    </div>
+                    <div class="product-actions" onclick="event.stopPropagation();">
+                        <a href="{% url 'editar_producto' p.pk %}" style="background:var(--blue);color:white;">Editar</a>
+                        <a href="{% url 'eliminar_producto' p.pk %}" style="background:#ffebee;color:#c62828;">Eliminar</a>
+                    </div>
+                </div>
+            </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center" style="padding:60px 20px;">
+            <h3>📭 No hay productos registrados</h3>
+            <p style="color:var(--text-muted);margin:16px 0;">Crea el primero para comenzar.</p>
+            <a href="{% url 'agregar_producto' %}" class="btn btn-success">+ Crear producto</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

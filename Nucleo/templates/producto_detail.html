@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ producto.nombre }} - Dummy Dog</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'global.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">🐶 Dummy Dog</a>
+            <a href="{% url 'productos_list' %}" style="color:white;text-decoration:none;font-weight:600;">← Volver</a>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width:900px;margin:40px auto;">
+        <div class="card">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:28px;">
+                <div>
+                    <img src="https://via.placeholder.com/400x300?text={{ producto.nombre }}" style="width:100%;border-radius:10px;background:var(--gray-light);">
+                </div>
+
+                <div>
+                    <div style="background:var(--yellow);padding:12px;border-radius:8px;margin-bottom:16px;display:inline-block;font-weight:600;color:var(--gray-dark);font-size:13px;">
+                        {{ producto.categoria|default:"Sin categoría" }}
+                    </div>
+
+                    <h1 style="margin:16px 0 8px;font-size:28px;font-weight:700;">{{ producto.nombre }}</h1>
+                    <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px;">Marca: {{ producto.marca|default:"—" }}</p>
+
+                    <div style="background:var(--light-green);padding:16px;border-radius:10px;margin-bottom:20px;">
+                        <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px;">Precio</div>
+                        <div style="font-size:32px;font-weight:700;color:var(--primary-green);">${{ producto.precio }}</div>
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;">
+                        <div style="background:var(--gray-light);padding:16px;border-radius:8px;text-align:center;">
+                            <div style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">En stock</div>
+                            <div style="font-size:24px;font-weight:700;color:var(--primary-green);">{{ producto.inventario }}</div>
+                        </div>
+                        <div style="background:var(--gray-light);padding:16px;border-radius:8px;text-align:center;">
+                            <div style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">ID Veterinaria</div>
+                            <div style="font-size:20px;font-weight:700;color:var(--gray-dark);">{{ producto.id_veter|default:"—" }}</div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex;gap:12px;">
+                        <a href="{% url 'editar_producto' producto.pk %}" class="btn btn-primary" style="flex:1;">✏️ Editar</a>
+                        <a href="{% url 'eliminar_producto' producto.pk %}" class="btn btn-danger" style="flex:1;">🗑️ Eliminar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

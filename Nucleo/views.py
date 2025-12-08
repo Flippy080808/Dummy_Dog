@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 import requests #type: ignore
 from .forms import ProductoForm
 from .models import Producto
@@ -35,12 +35,40 @@ def crear_producto(request):
         form = ProductoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('agregar_producto')  # recarga el formulario vacío; cambiar destino si se desea
+            return redirect('productos_list')
     else:
         form = ProductoForm()
     return render(request, 'agregar_productos.html', {'form': form})
 
+# READ - Lista de productos
+def lista_productos(request):
+    productos = Producto.objects.all().order_by('nombre')
+    return render(request, 'productos_list.html', {'productos': productos})
 
+# READ - Detalle de producto
+def detalle_producto(request, pk):
+    producto = get_object_or_404(Producto, pk=pk)
+    return render(request, 'producto_detail.html', {'producto': producto})
+
+# UPDATE - Editar producto
+def editar_producto(request, pk):
+    producto = get_object_or_404(Producto, pk=pk)
+    if request.method == 'POST':
+        form = ProductoForm(request.POST, instance=producto)
+        if form.is_valid():
+            form.save()
+            return redirect('productos_list')
+    else:
+        form = ProductoForm(instance=producto)
+    return render(request, 'editar_producto.html', {'form': form, 'producto': producto})
+
+# DELETE - Eliminar producto
+def eliminar_producto(request, pk):
+    producto = get_object_or_404(Producto, pk=pk)
+    if request.method == 'POST':
+        producto.delete()
+        return redirect('productos_list')
+    return render(request, 'confirmar_eliminar.html', {'producto': producto})
 
 #Autor Jose FDA
 def buscar_productos(request):
@@ -53,23 +81,3 @@ def buscar_productos(request):
             marca__icontains=q
         )
     return render(request, 'buscar.html', {'resultados': resultados})
-
-
-def editar_producto(request, producto_id):
-    producto = Producto.objects.get(pk=producto_id)
-    if request.method == 'POST':
-        form = ProductoForm(request.POST, instance=producto)
-        if form.is_valid():
-            form.save()
-            return redirect('buscar_productos')
-    else:
-        form = ProductoForm(instance=producto)
-    return render(request, 'editar_producto.html', {'form': form, 'producto': producto})
-
-
-def eliminar_producto(request, producto_id):
-    producto = Producto.objects.get(pk=producto_id)
-    if request.method == 'POST':
-        producto.delete()
-        return redirect('buscar_productos')
-    return render(request, 'eliminar_producto.html', {'producto': producto})

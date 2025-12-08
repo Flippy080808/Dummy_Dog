@@ -1,0 +1,333 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-green: #4CE64C;
+    --dark-green: #2db02d;
+    --light-green: #e8f5e9;
+    --yellow: #FCFA86;
+    --blue: #3483fa;
+    --dark-blue: #2968c8;
+    --gray-light: #f5f5f5;
+    --gray: #eeeeee;
+    --gray-dark: #333;
+    --text-muted: #777;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f9f9f9;
+    color: var(--gray-dark);
+    line-height: 1.6;
+}
+
+/* --- NAVBAR --- */
+.navbar {
+    background: var(--primary-green) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 12px 0;
+}
+
+.navbar-brand {
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: white !important;
+    letter-spacing: 0.5px;
+}
+
+.nav-link {
+    color: white !important;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+
+.nav-link:hover {
+    opacity: 0.85;
+}
+
+/* --- CONTENEDOR GENERAL --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 12px;
+}
+
+/* --- BOTONES --- */
+.btn {
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary {
+    background: var(--blue);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--dark-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(52, 131, 250, 0.3);
+}
+
+.btn-success {
+    background: var(--primary-green);
+    color: white;
+}
+
+.btn-success:hover {
+    background: var(--dark-green);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(76, 230, 76, 0.3);
+}
+
+.btn-danger {
+    background: #b00020;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #8b0000;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: var(--gray);
+    color: var(--gray-dark);
+}
+
+.btn-secondary:hover {
+    background: #d5d5d5;
+}
+
+/* --- TARJETAS --- */
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    padding: 20px;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    transform: translateY(-4px);
+}
+
+/* --- FORMULARIOS --- */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--gray-dark);
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fafafa;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 4px 12px rgba(76, 230, 76, 0.15);
+    background: white;
+}
+
+/* --- GRID DE PRODUCTOS --- */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 18px;
+    margin: 24px 0;
+}
+
+.product-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.product-image {
+    width: 100%;
+    height: 180px;
+    background: var(--gray-light);
+    overflow: hidden;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 14px;
+}
+
+.product-title {
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.product-brand {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.product-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary-green);
+    margin-bottom: 8px;
+}
+
+.product-actions {
+    display: flex;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.product-actions a {
+    flex: 1;
+    padding: 6px;
+    border-radius: 6px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+/* --- UTILIDADES --- */
+.text-center {
+    text-align: center;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--gray-dark);
+}
+
+.alert {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.alert-success {
+    background: #c8e6c9;
+    color: #2e7d32;
+    border-left: 4px solid #4caf50;
+}
+
+.alert-error {
+    background: #ffcdd2;
+    color: #c62828;
+    border-left: 4px solid #f44336;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: white;
+    border-radius: 12px;
+    padding: 28px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+}
+
+.hero {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+    color: white;
+    padding: 40px 0;
+    margin-bottom: 30px;
+}
+
+.hero h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 16px;
+    opacity: 0.95;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 12px;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+    }
+
+    .navbar-brand {
+        font-size: 18px !important;
+    }
+}

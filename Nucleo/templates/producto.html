@@ -4,42 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Producto</title>
+    <title>Página de Producto - Dummy Dog</title>
 
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="{% static 'global.css' %}">
     <!-- Enlace al archivo CSS usando el tag static -->
     <link rel="stylesheet" href="{% static 'styles_producto.css' %}">
+    <style>
+        .navbar-custom { background: var(--primary-green) !important; }
+    </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-custom-green shadow-sm">
-        <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="/">Dummy Dog</a>
+    <nav class="navbar navbar-expand-lg navbar-custom shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">🐶 Dummy Dog</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="/">Inicio</a>
                     </li>
-
                     <li class="nav-item">
-                        <a class="nav-link" href="Veterinaria">Veterinaria</a>
+                        <a class="nav-link" href="/Veterinaria">Veterinaria</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="servicios">Servicios</a>
+                        <a class="nav-link" href="/servicios">Servicios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="healthypuppy">Healthy Puppy</a>
+                        <a class="nav-link" href="/productos">Productos</a>
                     </li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'agregar_producto' %}" style="background:white;color:var(--primary-green);padding:6px 12px;border-radius:6px;margin-left:10px;font-weight:600;">+ Agregar</a></li>
                 </ul>
-                <form class="d-flex ms-auto" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Buscar..." aria-label="Buscar">
-                    <button class="btn btn-light" type="submit">Buscar</button>
-                </form>
             </div>
         </div>
     </nav>
