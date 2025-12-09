@@ -88,7 +88,6 @@
                     <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Veterinaria">Veterinaria</a></li>
                     <li class="nav-item"><a class="nav-link" href="/servicios">Servicios</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/productos">Productos</a></li>
                 </ul>
             </div>
         </div>
@@ -183,6 +182,20 @@
                                 <span class="error-message">{{ error }}</span>
                             {% endfor %}
                         {% endif %}
+                    </div>
+
+                    <div class="form-input-group">
+                        <label for="{{ form.imagen_url.id_for_label }}">
+                            URL de la Imagen
+                            <span class="info-indicator" style="font-weight:400;color:var(--text-muted);font-size:13px;">(ej: https://ejemplo.com/imagen.jpg)</span>
+                        </label>
+                        {{ form.imagen_url }}
+                        {% if form.imagen_url.errors %}
+                            {% for error in form.imagen_url.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
+                        <small style="display:block;margin-top:8px;color:var(--text-muted);font-size:13px;">💡 Sugerencia: Usa un servicio de hosting de imágenes gratuito como <strong>Imgur.com</strong>, <strong>ImgBB.com</strong> o <strong>Cloudinary</strong> para guardar tus imágenes y obtener la URL.</small>
                     </div>
 
                     <div class="action-buttons">

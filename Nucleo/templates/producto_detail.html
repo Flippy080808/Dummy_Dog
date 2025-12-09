@@ -104,7 +104,7 @@
                     <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Veterinaria">Veterinaria</a></li>
                     <li class="nav-item"><a class="nav-link" href="/servicios">Servicios</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/productos">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/carrito" id="navbar-cart">🛒 Carrito</a></li>
                 </ul>
             </div>
         </div>
@@ -124,7 +124,11 @@
                 <!-- Imagen del producto -->
                 <div>
                     <div class="product-image-container">
-                        <img src="https://via.placeholder.com/450x350?text={{ producto.nombre }}" alt="{{ producto.nombre }}" style="width:100%;height:auto;display:block;">
+                        {% if producto.imagen_url %}
+                        <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}" style="width:100%;height:auto;display:block;" onerror="this.src='https://previews.123rf.com/images/keltmd/keltmd1709/keltmd170900112/85061079-dead-face-icon-in-outline-style-vector-illustration-for-design-and-web-isolated-on-white-background.jpg'">
+                        {% else %}
+                        <img src="https://previews.123rf.com/images/keltmd/keltmd1709/keltmd170900112/85061079-dead-face-icon-in-outline-style-vector-illustration-for-design-and-web-isolated-on-white-background.jpg" alt="{{ producto.nombre }}" style="width:100%;height:auto;display:block;">
+                        {% endif %}
                     </div>
                 </div>
 
@@ -174,5 +178,17 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function updateNavbarCart() {
+            const cart = JSON.parse(localStorage.getItem('dummy_dog_cart')) || [];
+            const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            const cartBtn = document.getElementById('navbar-cart');
+            if (cartBtn) {
+                cartBtn.textContent = count > 0 ? `🛒 Carrito (${count})` : '🛒 Carrito';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', updateNavbarCart);
+        window.addEventListener('storage', updateNavbarCart);
+    </script>
 </body>
 </html>

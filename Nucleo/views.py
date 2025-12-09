@@ -3,16 +3,10 @@ import requests #type: ignore
 from .forms import ProductoForm
 from .models import Producto
 
-def index(request):    
-    url = "https://mocki.io/v1/294fd412-661e-46d1-a0bf-647e1f59fa53"
-    try:
-        response = requests.get(url)
-        data = response.json()
-        products = data.get("products", [])
-    except:
-        products = []
-
-    return render(request, "index.html", {"products": products})
+def index(request):
+    # Obtener productos de la base de datos
+    productos = Producto.objects.all().order_by('-id_product')[:8]  # Últimos 8 productos
+    return render(request, "index.html", {"productos": productos})
 
 def veter(request):
     return render(request, 'veter.html')
@@ -20,14 +14,35 @@ def veter(request):
 def serv(request):
     return render(request, 'serv.html')
 
-def producto(request):
-    return render(request, 'producto.html')
+def producto(request, pk=None):
+    if pk:
+        producto = get_object_or_404(Producto, pk=pk)
+        # Obtener productos relacionados (otros productos, excluir el actual)
+        productos_relacionados = Producto.objects.exclude(pk=pk)[:4]
+        return render(request, 'producto.html', {
+            'producto': producto,
+            'productos_relacionados': productos_relacionados
+        })
+    else:
+        # Si no hay pk, mostrar el último producto agregado
+        producto = Producto.objects.order_by('-id_product').first()
+        if producto:
+            productos_relacionados = Producto.objects.exclude(pk=producto.pk)[:4]
+            return render(request, 'producto.html', {
+                'producto': producto,
+                'productos_relacionados': productos_relacionados
+            })
+        else:
+            return render(request, 'producto.html', {'producto': None})
 
 def cuidador(request):
     return render(request, 'cuidador.html')
 
 def adopcion(request):
     return render(request, 'adopcion.html')
+
+def carrito(request):
+    return render(request, 'carrito.html')
 
 # Autor Alberto GJ
 def crear_producto(request):

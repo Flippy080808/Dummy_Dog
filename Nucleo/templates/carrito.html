@@ -1,0 +1,268 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛒 Carrito - Dummy Dog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'global.css' %}">
+    <style>
+        .navbar-custom { background: var(--primary-green) !important; }
+        .cart-item {
+            display: grid;
+            grid-template-columns: 80px 1fr 100px 50px;
+            gap: 16px;
+            align-items: center;
+            padding: 16px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid var(--gray);
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+        .cart-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            background: var(--gray-light);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .cart-item-info h6 {
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+        .cart-item-price {
+            font-weight: 700;
+            color: var(--primary-green);
+            font-size: 16px;
+        }
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--gray-light);
+            padding: 4px 8px;
+            border-radius: 6px;
+            width: fit-content;
+        }
+        .quantity-control button {
+            background: none;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--primary-green);
+            padding: 0 4px;
+            font-size: 14px;
+        }
+        .btn-remove {
+            background: #ffcdd2;
+            color: #c62828;
+            border: none;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 12px;
+        }
+        .btn-remove:hover {
+            background: #c62828;
+            color: white;
+        }
+        .summary-box {
+            background: linear-gradient(135deg, var(--light-green) 0%, #f0f8f0 100%);
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-green);
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        .summary-row.total {
+            border-top: 2px solid var(--primary-green);
+            padding-top: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+        .empty-cart {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        .empty-cart-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 768px) {
+            .cart-item {
+                grid-template-columns: 60px 1fr 30px;
+                gap: 12px;
+            }
+            .cart-item-image {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">🐶 Dummy Dog</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Veterinaria">Veterinaria</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/servicios">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/carrito">🛒 Carrito</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5" style="max-width:1200px;">
+        <h1 style="font-weight:700;margin-bottom:30px;">🛒 Mi Carrito de Compras</h1>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div id="cart-items-container"></div>
+            </div>
+            <div class="col-lg-4">
+                <div class="summary-box">
+                    <h5 style="margin-bottom:20px;font-weight:700;">Resumen del Pedido</h5>
+                    <div class="summary-row">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">$0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>IVA (19%):</span>
+                        <span id="iva">$0</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total:</span>
+                        <span id="total">$0</span>
+                    </div>
+                    <button class="btn btn-success w-100 mt-3" style="padding:12px;font-weight:600;font-size:15px;">
+                        ✅ Proceder al pago
+                    </button>
+                    <a href="/" class="btn btn-secondary w-100 mt-2" style="padding:12px;font-weight:600;">
+                        ← Continuar comprando
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer bg-dark text-white text-center py-4 mt-5">
+        <p class="mb-0">&copy; 2025 Dummy Dog. Todos los derechos reservados</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const CART_KEY = 'dummy_dog_cart';
+
+        function getCart() {
+            return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+            renderCart();
+            updateNavbarCart();
+        }
+
+        function renderCart() {
+            const cart = getCart();
+            const container = document.getElementById('cart-items-container');
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-cart">
+                        <div class="empty-cart-icon">🛒</div>
+                        <h3>Tu carrito está vacío</h3>
+                        <p style="color:var(--text-muted);margin:16px 0;">Agrega algunos productos para comenzar</p>
+                        <a href="/" class="btn btn-primary mt-3">Ir a productos</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = cart.map((item, idx) => `
+                <div class="cart-item">
+                    <div class="cart-item-image">
+                        <img src="${item.imagen_url || 'https://previews.123rf.com/images/keltmd/keltmd1709/keltmd170900112/85061079-dead-face-icon-in-outline-style-vector-illustration-for-design-and-web-isolated-on-white-background.jpg'}" alt="${item.nombre}" onerror="this.src='https://previews.123rf.com/images/keltmd/keltmd1709/keltmd170900112/85061079-dead-face-icon-in-outline-style-vector-illustration-for-design-and-web-isolated-on-white-background.jpg'">
+                    </div>
+                    <div class="cart-item-info">
+                        <h6>${item.nombre}</h6>
+                        <div class="cart-item-price">$${parseFloat(item.precio).toFixed(2)}</div>
+                    </div>
+                    <div class="quantity-control">
+                        <button onclick="updateQuantity(${idx}, -1)">−</button>
+                        <span style="min-width:25px;text-align:center;">${item.quantity}</span>
+                        <button onclick="updateQuantity(${idx}, 1)">+</button>
+                    </div>
+                    <button class="btn-remove" onclick="removeFromCart(${idx})">❌</button>
+                </div>
+            `).join('');
+
+            updateTotals();
+        }
+
+        function updateQuantity(idx, change) {
+            const cart = getCart();
+            cart[idx].quantity += change;
+            if (cart[idx].quantity < 1) {
+                cart.splice(idx, 1);
+            }
+            saveCart(cart);
+        }
+
+        function removeFromCart(idx) {
+            const cart = getCart();
+            cart.splice(idx, 1);
+            saveCart(cart);
+        }
+
+        function updateTotals() {
+            const cart = getCart();
+            const subtotal = cart.reduce((sum, item) => sum + (parseFloat(item.precio) * item.quantity), 0);
+            const iva = subtotal * 0.19;
+            const total = subtotal + iva;
+
+            document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+            document.getElementById('iva').textContent = '$' + iva.toFixed(2);
+            document.getElementById('total').textContent = '$' + total.toFixed(2);
+        }
+
+        function updateNavbarCart() {
+            const cart = getCart();
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartBtn = document.querySelector('a[href="/carrito"]');
+            if (cartBtn) {
+                cartBtn.textContent = count > 0 ? `🛒 Carrito (${count})` : '🛒 Carrito';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCart();
+            updateNavbarCart();
+        });
+    </script>
+</body>
+</html>

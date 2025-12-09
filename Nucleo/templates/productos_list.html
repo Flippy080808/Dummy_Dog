@@ -77,7 +77,11 @@
             <a href="{% url 'producto_detail' p.pk %}" class="product-card-wrapper">
             <div class="product-card">
                 <div class="product-image" style="position:relative;">
-                    <img src="https://via.placeholder.com/240x180?text={{ p.nombre|truncatewords:2 }}" alt="{{ p.nombre }}" loading="lazy">
+                    {% if p.imagen_url %}
+                    <img src="{{ p.imagen_url }}" alt="{{ p.nombre }}" loading="lazy" onerror="this.src='https://previews.123rf.com/images/keltmd/keltmd1709/keltmd170900112/85061079-dead-face-icon-in-outline-style-vector-illustration-for-design-and-web-isolated-on-white-background.jpg'">
+                    {% else %}
+                    <img src="https://previews.123rf.com/images/keltmd/keltmd1709/keltmd170900112/85061079-dead-face-icon-in-outline-style-vector-illustration-for-design-and-web-isolated-on-white-background.jpg" alt="{{ p.nombre }}" loading="lazy">
+                    {% endif %}
                     {% if p.categoria %}
                     <div class="category-badge" style="position:absolute;top:8px;right:8px;">{{ p.categoria }}</div>
                     {% endif %}
