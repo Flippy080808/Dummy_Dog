@@ -7,38 +7,147 @@
     <title>Eliminar producto - Dummy Dog</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'global.css' %}">
+    <style>
+        .navbar-custom { background: var(--primary-green) !important; }
+        .warning-card {
+            border: 2px solid #ffcdd2;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(198, 40, 40, 0.12);
+        }
+        .warning-header {
+            background: linear-gradient(135deg, #f44336 0%, #c62828 100%);
+            color: white;
+            padding: 28px;
+            text-align: center;
+        }
+        .warning-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+        .warning-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+        }
+        .warning-content {
+            padding: 32px;
+            background: white;
+        }
+        .product-info-box {
+            background: var(--gray-light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 24px;
+            border-left: 4px solid #f44336;
+        }
+        .product-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gray-dark);
+        }
+        .product-details {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+        .warning-message {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 14px;
+            border-radius: 6px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            color: #e65100;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        .action-buttons .btn {
+            flex: 1;
+            padding: 12px 16px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        .btn-delete-confirm {
+            background: #f44336;
+            color: white;
+            border: none;
+            transition: all 0.2s;
+        }
+        .btn-delete-confirm:hover {
+            background: #c62828;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(244, 67, 54, 0.3);
+        }
+        @media (max-width: 768px) {
+            .action-buttons {
+                flex-direction: column;
+            }
+            .warning-content {
+                padding: 24px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
             <a class="navbar-brand" href="/">🐶 Dummy Dog</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Veterinaria">Veterinaria</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/servicios">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/productos">Productos</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div class="container" style="max-width:500px;margin:60px auto;">
-        <div class="card" style="border:2px solid #ffebee;">
-            <div style="background:#ffebee;color:#c62828;padding:24px;border-radius:12px 12px 0 0;text-align:center;">
-                <h3 style="margin:0;">⚠️ Eliminar producto</h3>
+    <div class="container" style="max-width:500px;margin:60px auto;padding:0 16px;">
+        <div class="warning-card">
+            <div class="warning-header">
+                <div class="warning-icon">⚠️</div>
+                <h1 class="warning-title">Eliminar Producto</h1>
             </div>
 
-            <div style="padding:28px;text-align:center;">
-                <p style="font-size:16px;color:var(--gray-dark);margin-bottom:20px;">
-                    ¿Estás seguro de que deseas eliminar el producto:
+            <div class="warning-content">
+                <p style="font-size:15px;color:var(--gray-dark);margin-bottom:20px;">
+                    Estás a punto de eliminar el siguiente producto:
                 </p>
-                <p style="font-size:20px;font-weight:700;color:var(--primary-green);margin-bottom:20px;">
-                    {{ producto.nombre }}
-                </p>
-                <p style="font-size:13px;color:var(--text-muted);margin-bottom:28px;">
-                    Esta acción no se puede deshacer.
-                </p>
+
+                <div class="product-info-box">
+                    <div class="product-name">{{ producto.nombre }}</div>
+                    <div class="product-details">
+                        {% if producto.marca %}
+                            Marca: <strong>{{ producto.marca }}</strong>
+                        {% endif %}
+                        {% if producto.precio %}
+                            • Precio: <strong>${{ producto.precio }}</strong>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="warning-message">
+                    <strong>⚠️ Advertencia:</strong> Esta acción no se puede deshacer. El producto será eliminado permanentemente del catálogo.
+                </div>
 
                 <form method="post">
                     {% csrf_token %}
-                    <div style="display:flex;gap:12px;justify-content:center;">
-                        <button type="submit" class="btn btn-danger">Sí, eliminar</button>
-                        <a href="{% url 'productos_list' %}" class="btn btn-secondary">Cancelar</a>
+                    <div class="action-buttons">
+                        <button type="submit" class="btn btn-delete-confirm">🗑️ Sí, eliminar</button>
+                        <a href="{% url 'productos_list' %}" class="btn btn-secondary">❌ Cancelar</a>
                     </div>
                 </form>
+
+                <a href="{% url 'producto_detail' producto.pk %}" style="display:block;margin-top:16px;text-align:center;color:var(--blue);text-decoration:none;font-size:14px;font-weight:600;">
+                    ← Volver a detalles del producto
+                </a>
             </div>
         </div>
     </div>

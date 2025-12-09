@@ -8,77 +8,212 @@
     <title>Editar {{ producto.nombre }} - Dummy Dog</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'global.css' %}">
+    <style>
+        .navbar-custom { background: var(--primary-green) !important; }
+        .form-input-group {
+            margin-bottom: 18px;
+        }
+        .form-input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--gray-dark);
+        }
+        .form-input-group input,
+        .form-input-group select,
+        .form-input-group textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border: 2px solid var(--gray);
+            border-radius: 8px;
+            font-size: 14px;
+            background: white;
+            transition: all 0.2s;
+        }
+        .form-input-group input:focus,
+        .form-input-group select:focus,
+        .form-input-group textarea:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 4px 12px rgba(52, 131, 250, 0.15);
+            background: white;
+        }
+        .required-indicator {
+            color: #e74c3c;
+            margin-left: 4px;
+        }
+        .form-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+        .action-buttons .btn {
+            flex: 1;
+            padding: 12px 16px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        .error-message {
+            color: #c62828;
+            font-size: 13px;
+            margin-top: 6px;
+            display: block;
+        }
+        .product-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .product-preview {
+            background: var(--gray-light);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        @media (max-width: 768px) {
+            .form-columns {
+                grid-template-columns: 1fr;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+            .product-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
             <a class="navbar-brand" href="/">🐶 Dummy Dog</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Veterinaria">Veterinaria</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/servicios">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/productos">Productos</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
 
-    <div class="container" style="max-width:700px;margin:40px auto;">
-        <div class="card">
-            <div style="background:linear-gradient(135deg, var(--blue) 0%, var(--dark-blue) 100%);color:white;padding:24px;border-radius:12px 12px 0 0;">
-                <h2 style="margin:0;">Editar Producto</h2>
-                <p style="margin:4px 0 0;opacity:0.9;">{{ producto.nombre }}</p>
+    <div class="container" style="max-width:700px;margin:40px auto;padding:0 16px;">
+        <div class="card" style="box-shadow: 0 4px 16px rgba(0,0,0,0.08);border:none;">
+            <div style="background:linear-gradient(135deg, var(--blue) 0%, var(--dark-blue) 100%);color:white;padding:28px;border-radius:12px 12px 0 0;">
+                <h1 style="margin:0;font-size:28px;font-weight:700;">✏️ Editar Producto</h1>
+                <p style="margin:8px 0 0;opacity:0.9;font-size:15px;">{{ producto.nombre }}</p>
             </div>
 
-            <div style="padding:28px;">
+            <div style="padding:32px;">
                 <form method="post" novalidate>
                     {% csrf_token %}
 
                     {% if form.non_field_errors %}
-                    <div class="alert alert-error">
+                    <div class="alert alert-danger" style="border-left: 4px solid #c62828;">
+                        <strong>Error al actualizar:</strong>
                         {% for error in form.non_field_errors %}
-                            <p>{{ error }}</p>
+                            <p style="margin:4px 0;">{{ error }}</p>
                         {% endfor %}
                     </div>
                     {% endif %}
 
-                    <div class="form-group">
-                        <label for="{{ form.nombre.id_for_label }}">Nombre del producto *</label>
+                    <div class="form-input-group">
+                        <label for="{{ form.nombre.id_for_label }}">
+                            Nombre del producto 
+                            <span class="required-indicator">*</span>
+                        </label>
                         {{ form.nombre }}
-                        {% if form.nombre.errors %}<div class="alert alert-error">{{ form.nombre.errors }}</div>{% endif %}
+                        {% if form.nombre.errors %}
+                            {% for error in form.nombre.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-input-group">
                         <label for="{{ form.marca.id_for_label }}">Marca</label>
                         {{ form.marca }}
-                        {% if form.marca.errors %}<div class="alert alert-error">{{ form.marca.errors }}</div>{% endif %}
+                        {% if form.marca.errors %}
+                            {% for error in form.marca.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
                     </div>
 
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-                        <div class="form-group">
-                            <label for="{{ form.precio.id_for_label }}">Precio *</label>
+                    <div class="form-columns">
+                        <div class="form-input-group">
+                            <label for="{{ form.precio.id_for_label }}">
+                                Precio 
+                                <span class="required-indicator">*</span>
+                            </label>
                             {{ form.precio }}
-                            {% if form.precio.errors %}<div class="alert alert-error">{{ form.precio.errors }}</div>{% endif %}
+                            {% if form.precio.errors %}
+                                {% for error in form.precio.errors %}
+                                    <span class="error-message">{{ error }}</span>
+                                {% endfor %}
+                            {% endif %}
                         </div>
 
-                        <div class="form-group">
-                            <label for="{{ form.inventario.id_for_label }}">Inventario *</label>
+                        <div class="form-input-group">
+                            <label for="{{ form.inventario.id_for_label }}">
+                                Inventario 
+                                <span class="required-indicator">*</span>
+                            </label>
                             {{ form.inventario }}
-                            {% if form.inventario.errors %}<div class="alert alert-error">{{ form.inventario.errors }}</div>{% endif %}
+                            {% if form.inventario.errors %}
+                                {% for error in form.inventario.errors %}
+                                    <span class="error-message">{{ error }}</span>
+                                {% endfor %}
+                            {% endif %}
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-input-group">
                         <label for="{{ form.categoria.id_for_label }}">Categoría</label>
                         {{ form.categoria }}
-                        {% if form.categoria.errors %}<div class="alert alert-error">{{ form.categoria.errors }}</div>{% endif %}
+                        {% if form.categoria.errors %}
+                            {% for error in form.categoria.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-input-group">
                         <label for="{{ form.id_veter.id_for_label }}">ID Veterinaria</label>
                         {{ form.id_veter }}
-                        {% if form.id_veter.errors %}<div class="alert alert-error">{{ form.id_veter.errors }}</div>{% endif %}
+                        {% if form.id_veter.errors %}
+                            {% for error in form.id_veter.errors %}
+                                <span class="error-message">{{ error }}</span>
+                            {% endfor %}
+                        {% endif %}
                     </div>
 
-                    <div style="margin-top:28px;display:flex;gap:12px;">
-                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                        <a href="{% url 'productos_list' %}" class="btn btn-secondary">Cancelar</a>
+                    <div class="action-buttons">
+                        <button type="submit" class="btn btn-primary">✅ Guardar cambios</button>
+                        <a href="{% url 'producto_detail' producto.pk %}" class="btn btn-secondary">👁️ Ver producto</a>
+                        <a href="{% url 'productos_list' %}" class="btn btn-secondary">📦 Catálogo</a>
                     </div>
+
+                    <p style="font-size:12px;color:var(--text-muted);margin-top:16px;text-align:center;">
+                        Los campos marcados con <span class="required-indicator">*</span> son obligatorios
+                    </p>
                 </form>
             </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
