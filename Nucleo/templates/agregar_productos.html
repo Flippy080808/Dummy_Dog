@@ -1,217 +1,222 @@
-<!--Autores de la plantilla Jose FDA y Alberto GJ-->
-
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Agregar Producto - Dummy Dog</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'global.css' %}">
-    <style>
-        .navbar-custom { background: var(--primary-green) !important; }
-        .form-input-group {
-            margin-bottom: 18px;
-        }
-        .form-input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--gray-dark);
-        }
-        .form-input-group input,
-        .form-input-group select,
-        .form-input-group textarea {
-            width: 100%;
-            padding: 11px 14px;
-            border: 2px solid var(--gray);
-            border-radius: 8px;
-            font-size: 14px;
-            background: white;
-            transition: all 0.2s;
-        }
-        .form-input-group input:focus,
-        .form-input-group select:focus,
-        .form-input-group textarea:focus {
-            outline: none;
-            border-color: var(--primary-green);
-            box-shadow: 0 4px 12px rgba(76, 230, 76, 0.15);
-            background: white;
-        }
-        .required-indicator {
-            color: #e74c3c;
-            margin-left: 4px;
-        }
+
+{% block title %}Agregar Producto - Dummy Dog{% endblock %}
+
+{% block styles %}
+<style>
+    .form-input-group {
+        margin-bottom: 18px;
+    }
+    .form-input-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--gray-dark);
+    }
+    .form-input-group input,
+    .form-input-group select,
+    .form-input-group textarea {
+        width: 100%;
+        padding: 11px 14px;
+        border: 2px solid var(--gray);
+        border-radius: 8px;
+        font-size: 14px;
+        background: white;
+        transition: all 0.2s;
+    }
+    .form-input-group input:focus,
+    .form-input-group select:focus,
+    .form-input-group textarea:focus {
+        outline: none;
+        border-color: var(--primary-green);
+        box-shadow: 0 4px 12px rgba(76, 230, 76, 0.15);
+        background: white;
+    }
+    .required-indicator {
+        color: #e74c3c;
+        margin-left: 4px;
+    }
+    .form-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+    .action-buttons {
+        display: flex;
+        gap: 12px;
+        margin-top: 28px;
+    }
+    .action-buttons .btn {
+        flex: 1;
+        padding: 12px 16px;
+        font-weight: 600;
+        font-size: 15px;
+    }
+    .error-message {
+        color: #c62828;
+        font-size: 13px;
+        margin-top: 6px;
+        display: block;
+    }
+    .form-container {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+    .form-card {
+        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        border: none;
+    }
+    .form-header {
+        background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
+        color: white;
+        padding: 28px;
+        border-radius: 12px 12px 0 0;
+    }
+    .form-header h1 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 700;
+    }
+    .form-header p {
+        margin: 8px 0 0;
+        opacity: 0.9;
+        font-size: 15px;
+    }
+    .form-body {
+        padding: 32px;
+    }
+    @media (max-width: 768px) {
         .form-columns {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 18px;
+            grid-template-columns: 1fr;
         }
         .action-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 28px;
+            flex-direction: column;
         }
-        .action-buttons .btn {
-            flex: 1;
-            padding: 12px 16px;
-            font-weight: 600;
-            font-size: 15px;
-        }
-        .error-message {
-            color: #c62828;
-            font-size: 13px;
-            margin-top: 6px;
-            display: block;
-        }
-        @media (max-width: 768px) {
-            .form-columns {
-                grid-template-columns: 1fr;
-            }
-            .action-buttons {
-                flex-direction: column;
-            }
-        }
-    </style>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <div class="container">
-            <a class="navbar-brand" href="/">🐶 Dummy Dog</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/Veterinaria">Veterinaria</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/servicios">Servicios</a></li>
-                </ul>
-            </div>
+    }
+</style>
+{% endblock %}
+
+{% block hero %}{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="card form-card">
+        <div class="form-header">
+            <h1>➕ Nuevo Producto</h1>
+            <p>Agrega un nuevo producto al catálogo</p>
         </div>
-    </nav>
 
-    <div class="container" style="max-width:700px;margin:40px auto;padding:0 16px;">
-        <div class="card" style="box-shadow: 0 4px 16px rgba(0,0,0,0.08);border:none;">
-            <div style="background:linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);color:white;padding:28px;border-radius:12px 12px 0 0;">
-                <h1 style="margin:0;font-size:28px;font-weight:700;">➕ Nuevo Producto</h1>
-                <p style="margin:8px 0 0;opacity:0.9;font-size:15px;">Agrega un nuevo producto al catálogo</p>
-            </div>
+        <div class="form-body">
+            <form method="post" novalidate>
+                {% csrf_token %}
 
-            <div style="padding:32px;">
-                <form method="post" novalidate>
-                    {% csrf_token %}
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger" style="border-left: 4px solid #c62828;">
+                    <strong>Error al guardar:</strong>
+                    {% for error in form.non_field_errors %}
+                        <p style="margin:4px 0;">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
 
-                    {% if form.non_field_errors %}
-                    <div class="alert alert-danger" style="border-left: 4px solid #c62828;">
-                        <strong>Error al guardar:</strong>
-                        {% for error in form.non_field_errors %}
-                            <p style="margin:4px 0;">{{ error }}</p>
+                <div class="form-input-group">
+                    <label for="{{ form.nombre.id_for_label }}">
+                        Nombre del producto 
+                        <span class="required-indicator">*</span>
+                    </label>
+                    {{ form.nombre }}
+                    {% if form.nombre.errors %}
+                        {% for error in form.nombre.errors %}
+                            <span class="error-message">{{ error }}</span>
                         {% endfor %}
-                    </div>
                     {% endif %}
+                </div>
 
+                <div class="form-input-group">
+                    <label for="{{ form.marca.id_for_label }}">Marca</label>
+                    {{ form.marca }}
+                    {% if form.marca.errors %}
+                        {% for error in form.marca.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="form-columns">
                     <div class="form-input-group">
-                        <label for="{{ form.nombre.id_for_label }}">
-                            Nombre del producto 
+                        <label for="{{ form.precio.id_for_label }}">
+                            Precio 
                             <span class="required-indicator">*</span>
                         </label>
-                        {{ form.nombre }}
-                        {% if form.nombre.errors %}
-                            {% for error in form.nombre.errors %}
+                        {{ form.precio }}
+                        {% if form.precio.errors %}
+                            {% for error in form.precio.errors %}
                                 <span class="error-message">{{ error }}</span>
                             {% endfor %}
                         {% endif %}
                     </div>
 
                     <div class="form-input-group">
-                        <label for="{{ form.marca.id_for_label }}">Marca</label>
-                        {{ form.marca }}
-                        {% if form.marca.errors %}
-                            {% for error in form.marca.errors %}
-                                <span class="error-message">{{ error }}</span>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-
-                    <div class="form-columns">
-                        <div class="form-input-group">
-                            <label for="{{ form.precio.id_for_label }}">
-                                Precio 
-                                <span class="required-indicator">*</span>
-                            </label>
-                            {{ form.precio }}
-                            {% if form.precio.errors %}
-                                {% for error in form.precio.errors %}
-                                    <span class="error-message">{{ error }}</span>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-
-                        <div class="form-input-group">
-                            <label for="{{ form.inventario.id_for_label }}">
-                                Inventario 
-                                <span class="required-indicator">*</span>
-                            </label>
-                            {{ form.inventario }}
-                            {% if form.inventario.errors %}
-                                {% for error in form.inventario.errors %}
-                                    <span class="error-message">{{ error }}</span>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                    </div>
-
-                    <div class="form-input-group">
-                        <label for="{{ form.categoria.id_for_label }}">Categoría</label>
-                        {{ form.categoria }}
-                        {% if form.categoria.errors %}
-                            {% for error in form.categoria.errors %}
-                                <span class="error-message">{{ error }}</span>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-
-                    <div class="form-input-group">
-                        <label for="{{ form.id_veter.id_for_label }}">ID Veterinaria</label>
-                        {{ form.id_veter }}
-                        {% if form.id_veter.errors %}
-                            {% for error in form.id_veter.errors %}
-                                <span class="error-message">{{ error }}</span>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-
-                    <div class="form-input-group">
-                        <label for="{{ form.imagen_url.id_for_label }}">
-                            URL de la Imagen
-                            <span class="info-indicator" style="font-weight:400;color:var(--text-muted);font-size:13px;">(ej: https://ejemplo.com/imagen.jpg)</span>
+                        <label for="{{ form.inventario.id_for_label }}">
+                            Inventario 
+                            <span class="required-indicator">*</span>
                         </label>
-                        {{ form.imagen_url }}
-                        {% if form.imagen_url.errors %}
-                            {% for error in form.imagen_url.errors %}
+                        {{ form.inventario }}
+                        {% if form.inventario.errors %}
+                            {% for error in form.inventario.errors %}
                                 <span class="error-message">{{ error }}</span>
                             {% endfor %}
                         {% endif %}
-                        <small style="display:block;margin-top:8px;color:var(--text-muted);font-size:13px;">💡 Sugerencia: Usa un servicio de hosting de imágenes gratuito como <strong>Imgur.com</strong>, <strong>ImgBB.com</strong> o <strong>Cloudinary</strong> para guardar tus imágenes y obtener la URL.</small>
                     </div>
+                </div>
 
-                    <div class="action-buttons">
-                        <button type="submit" class="btn btn-success">✅ Guardar producto</button>
-                        <a href="{% url 'productos_list' %}" class="btn btn-secondary">📦 Ver catálogo</a>
-                        <a href="/" class="btn btn-secondary">🏠 Inicio</a>
-                    </div>
+                <div class="form-input-group">
+                    <label for="{{ form.categoria.id_for_label }}">Categoría</label>
+                    {{ form.categoria }}
+                    {% if form.categoria.errors %}
+                        {% for error in form.categoria.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
 
-                    <p style="font-size:12px;color:var(--text-muted);margin-top:16px;text-align:center;">
-                        Los campos marcados con <span class="required-indicator">*</span> son obligatorios
-                    </p>
-                </form>
-            </div>
+                <div class="form-input-group">
+                    <label for="{{ form.id_veter.id_for_label }}">ID Veterinaria</label>
+                    {{ form.id_veter }}
+                    {% if form.id_veter.errors %}
+                        {% for error in form.id_veter.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="form-input-group">
+                    <label for="{{ form.imagen_url.id_for_label }}">
+                        URL de la Imagen
+                        <span class="info-indicator" style="font-weight:400;color:var(--text-muted);font-size:13px;">(ej: https://ejemplo.com/imagen.jpg)</span>
+                    </label>
+                    {{ form.imagen_url }}
+                    {% if form.imagen_url.errors %}
+                        {% for error in form.imagen_url.errors %}
+                            <span class="error-message">{{ error }}</span>
+                        {% endfor %}
+                    {% endif %}
+                    <small style="display:block;margin-top:8px;color:var(--text-muted);font-size:13px;">💡 Sugerencia: Usa un servicio de hosting de imágenes gratuito como <strong>Imgur.com</strong>, <strong>ImgBB.com</strong> o <strong>Cloudinary</strong> para guardar tus imágenes y obtener la URL.</small>
+                </div>
+
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-success">✅ Guardar producto</button>
+                    <a href="{% url 'productos_list' %}" class="btn btn-secondary">📦 Ver catálogo</a>
+                    <a href="/" class="btn btn-secondary">🏠 Inicio</a>
+                </div>
+
+                <p style="font-size:12px;color:var(--text-muted);margin-top:16px;text-align:center;">
+                    Los campos marcados con <span class="required-indicator">*</span> son obligatorios
+                </p>
+            </form>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+</div>
+{% endblock %}

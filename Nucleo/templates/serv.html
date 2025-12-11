@@ -1,127 +1,98 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends 'base.html' %}
 {% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servicios Caninos - Dummy Dog</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'global.css' %}">
-    <link rel="stylesheet" href="{% static 'style_serv.css' %}">
-</head>
+{% block title %}Servicios Caninos - Dummy Dog{% endblock %}
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="/">🐶 Dummy Dog</a>
+{% block styles %}
+<link rel="stylesheet" href="{% static 'style_serv.css' %}">
+<style>
+    .grid-container {
+        padding: 40px 20px;
+    }
+</style>
+{% endblock %}
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Veterinaria">Veterinaria</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/servicios">Servicios</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'agregar_producto' %}" style="background:white;color:var(--primary-green);padding:6px 12px;border-radius:6px;margin-left:10px;font-weight:600;">+ Agregar</a></li>
-                </ul>
+{% block hero %}
+<div style="background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%); color: white; padding: 40px 20px; text-align: center;">
+    <h1 style="margin: 0; font-size: 32px; font-weight: 700;">Servicios Caninos</h1>
+    <p style="margin: 8px 0 0; opacity: 0.9; font-size: 16px;">Paseadores y cuidadores profesionales para tu mascota</p>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="grid-container">
+
+    <button class="card-btn" onclick="alert('Seleccionaste: Paseador Labrador')">
+        <img src="https://images.unsplash.com/photo-1591769225440-811ad7d6eab2?q=80&w=600&auto=format&fit=crop"
+            alt="Labrador" class="card-bg">
+        <div class="overlay"></div>
+
+        <div class="card-content">
+            <div class="icon-circle bg-blue">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C8.13 2 5 5.13 5 9C5 11.38 6.19 13.47 8 14.74V17C8 17.55 8.45 18 9 18H15C15.55 18 16 17.55 16 17V14.74C17.81 13.47 19 11.38 19 9C19 5.13 15.87 2 12 2ZM9 8C9.55 8 10 8.45 10 9C10 9.55 9.55 10 9 10C8.45 10 8 9.55 8 9C8 8.45 8.45 8 9 8ZM15 9C15 9.55 14.55 10 14 10C13.45 10 13 9.55 13 9C13 8.45 13.45 8 14 8C14.55 8 15 8.45 15 9Z" fill="white" />
+                    <path d="M12 14C11.17 14 10.5 13.33 10.5 12.5C10.5 12.22 10.72 12 11 12H13C13.28 12 13.5 12.22 13.5 12.5C13.5 13.33 12.83 14 12 14Z" fill="#333" />
+                </svg>
             </div>
+            <div class="pill-label">PASEADOR</div>
+            <div class="status-text text-red">NO DISPONIBLE</div>
         </div>
-    </nav>
+    </button>
 
-    <style>
-        .navbar-custom { background: var(--primary-green) !important; }
-        .main-content-wrapper { margin-top: 60px; }
-        .grid-container { padding: 40px 20px; }
-    </style>
-        <div class="grid-container">
+    <button class="card-btn" onclick="alert('Seleccionaste: Paseador San Bernardo')">
+        <img src="https://images.unsplash.com/photo-1554693191-d305d214a1db?q=80&w=600&auto=format&fit=crop"
+            alt="San Bernardo" class="card-bg">
+        <div class="overlay"></div>
 
-            <button class="card-btn" onclick="alert('Seleccionaste: Paseador Labrador')">
-                <img src="https://images.unsplash.com/photo-1591769225440-811ad7d6eab2?q=80&w=600&auto=format&fit=crop"
-                    alt="Labrador" class="card-bg">
-                <div class="overlay"></div>
-
-                <div class="card-content">
-                    <div class="icon-circle bg-blue">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2C8.13 2 5 5.13 5 9C5 11.38 6.19 13.47 8 14.74V17C8 17.55 8.45 18 9 18H15C15.55 18 16 17.55 16 17V14.74C17.81 13.47 19 11.38 19 9C19 5.13 15.87 2 12 2ZM9 8C9.55 8 10 8.45 10 9C10 9.55 9.55 10 9 10C8.45 10 8 9.55 8 9C8 8.45 8.45 8 9 8ZM15 9C15 9.55 14.55 10 14 10C13.45 10 13 9.55 13 9C13 8.45 13.45 8 14 8C14.55 8 15 8.45 15 9Z" fill="white" />
-                            <path d="M12 14C11.17 14 10.5 13.33 10.5 12.5C10.5 12.22 10.72 12 11 12H13C13.28 12 13.5 12.22 13.5 12.5C13.5 13.33 12.83 14 12 14Z" fill="#333" />
-                        </svg>
-                    </div>
-                    <div class="pill-label">PASEADOR</div>
-                    <div class="status-text text-red">NO DISPONIBLE</div>
-                </div>
-            </button>
-
-            <button class="card-btn" onclick="alert('Seleccionaste: Paseador San Bernardo')">
-                <img src="https://images.unsplash.com/photo-1554693191-d305d214a1db?q=80&w=600&auto=format&fit=crop"
-                    alt="San Bernardo" class="card-bg">
-                <div class="overlay"></div>
-
-                <div class="card-content">
-                    <div class="icon-circle bg-blue">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2C8.13 2 5 5.13 5 9C5 11.38 6.19 13.47 8 14.74V17C8 17.55 8.45 18 9 18H15C15.55 18 16 17.55 16 17V14.74C17.81 13.47 19 11.38 19 9C19 5.13 15.87 2 12 2ZM9 8C9.55 8 10 8.45 10 9C10 9.55 9.55 10 9 10C8.45 10 8 9.55 8 9C8 8.45 8.45 8 9 8ZM15 9C15 9.55 14.55 10 14 10C13.45 10 13 9.55 13 9C13 8.45 13.45 8 14 8C14.55 8 15 8.45 15 9Z" fill="white" />
-                            <path d="M12 14C11.17 14 10.5 13.33 10.5 12.5C10.5 12.22 10.72 12 11 12H13C13.28 12 13.5 12.22 13.5 12.5C13.5 13.33 12.83 14 12 14Z" fill="#333" />
-                        </svg>
-                    </div>
-                    <div class="pill-label">PASEADOR</div>
-                    <div class="status-text text-green">DISPONIBLE</div>
-                </div>
-            </button>
-
-            <button class="card-btn" onclick="alert('Seleccionaste: Cuidador Cachorros')">
-                <img src="https://images.unsplash.com/photo-1558947530-cbcf6e9aeeae?q=80&w=600&auto=format&fit=crop"
-                    alt="Cachorros" class="card-bg">
-                <div class="overlay"></div>
-
-                <div class="card-content">
-                    <div class="icon-circle bg-orange">
-                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4.5 9C4.5 7.07 5.86 5.43 7.66 4.85C7.94 2.87 9.8 1.5 12 1.5C14.2 1.5 16.06 2.87 16.34 4.85C18.14 5.43 19.5 7.07 19.5 9C19.5 10.76 18.28 12.24 16.63 12.72L17.5 17.5H6.5L7.37 12.72C5.72 12.24 4.5 10.76 4.5 9Z" fill="white" />
-                            <circle cx="9" cy="8" r="1.5" fill="#333" />
-                            <circle cx="15" cy="8" r="1.5" fill="#333" />
-                            <path d="M12 11.5C11.17 11.5 10.5 10.83 10.5 10H13.5C13.5 10.83 12.83 11.5 12 11.5Z" fill="#333" />
-                        </svg>
-                    </div>
-                    <div class="pill-label">CUIDADOR</div>
-                    <div class="status-text text-red">NO DISPONIBLE</div>
-                </div>
-            </button>
-
-            <button class="card-btn" onclick="alert('Seleccionaste: Cuidador Beagle')">
-                <img src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?q=80&w=600&auto=format&fit=crop"
-                    alt="Beagle" class="card-bg">
-                <div class="overlay"></div>
-
-                <div class="card-content">
-                    <div class="icon-circle bg-orange">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4.5 9C4.5 7.07 5.86 5.43 7.66 4.85C7.94 2.87 9.8 1.5 12 1.5C14.2 1.5 16.06 2.87 16.34 4.85C18.14 5.43 19.5 7.07 19.5 9C19.5 10.76 18.28 12.24 16.63 12.72L17.5 17.5H6.5L7.37 12.72C5.72 12.24 4.5 10.76 4.5 9Z" fill="white" />
-                            <circle cx="9" cy="8" r="1.5" fill="#333" />
-                            <circle cx="15" cy="8" r="1.5" fill="#333" />
-                            <path d="M12 11.5C11.17 11.5 10.5 10.83 10.5 10H13.5C13.5 10.83 12.83 11.5 12 11.5Z" fill="#333" />
-                        </svg>
-                    </div>
-                    <div class="pill-label">CUIDADOR</div>
-                    <div class="status-text text-green">DISPONIBLE</div>
-                </div>
-            </button>
-
+        <div class="card-content">
+            <div class="icon-circle bg-blue">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C8.13 2 5 5.13 5 9C5 11.38 6.19 13.47 8 14.74V17C8 17.55 8.45 18 9 18H15C15.55 18 16 17.55 16 17V14.74C17.81 13.47 19 11.38 19 9C19 5.13 15.87 2 12 2ZM9 8C9.55 8 10 8.45 10 9C10 9.55 9.55 10 9 10C8.45 10 8 9.55 8 9C8 8.45 8.45 8 9 8ZM15 9C15 9.55 14.55 10 14 10C13.45 10 13 9.55 13 9C13 8.45 13.45 8 14 8C14.55 8 15 8.45 15 9Z" fill="white" />
+                    <path d="M12 14C11.17 14 10.5 13.33 10.5 12.5C10.5 12.22 10.72 12 11 12H13C13.28 12 13.5 12.22 13.5 12.5C13.5 13.33 12.83 14 12 14Z" fill="#333" />
+                </svg>
+            </div>
+            <div class="pill-label">PASEADOR</div>
+            <div class="status-text text-green">DISPONIBLE</div>
         </div>
-    </div>
+    </button>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+    <button class="card-btn" onclick="alert('Seleccionaste: Cuidador Cachorros')">
+        <img src="https://images.unsplash.com/photo-1558947530-cbcf6e9aeeae?q=80&w=600&auto=format&fit=crop"
+            alt="Cachorros" class="card-bg">
+        <div class="overlay"></div>
 
-</body>
-</html>
+        <div class="card-content">
+            <div class="icon-circle bg-orange">
+                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.5 9C4.5 7.07 5.86 5.43 7.66 4.85C7.94 2.87 9.8 1.5 12 1.5C14.2 1.5 16.06 2.87 16.34 4.85C18.14 5.43 19.5 7.07 19.5 9C19.5 10.76 18.28 12.24 16.63 12.72L17.5 17.5H6.5L7.37 12.72C5.72 12.24 4.5 10.76 4.5 9Z" fill="white" />
+                    <circle cx="9" cy="8" r="1.5" fill="#333" />
+                    <circle cx="15" cy="8" r="1.5" fill="#333" />
+                    <path d="M12 11.5C11.17 11.5 10.5 10.83 10.5 10H13.5C13.5 10.83 12.83 11.5 12 11.5Z" fill="#333" />
+                </svg>
+            </div>
+            <div class="pill-label">CUIDADOR</div>
+            <div class="status-text text-red">NO DISPONIBLE</div>
+        </div>
+    </button>
+
+    <button class="card-btn" onclick="alert('Seleccionaste: Cuidador Beagle')">
+        <img src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?q=80&w=600&auto=format&fit=crop"
+            alt="Beagle" class="card-bg">
+        <div class="overlay"></div>
+
+        <div class="card-content">
+            <div class="icon-circle bg-orange">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.5 9C4.5 7.07 5.86 5.43 7.66 4.85C7.94 2.87 9.8 1.5 12 1.5C14.2 1.5 16.06 2.87 16.34 4.85C18.14 5.43 19.5 7.07 19.5 9C19.5 10.76 18.28 12.24 16.63 12.72L17.5 17.5H6.5L7.37 12.72C5.72 12.24 4.5 10.76 4.5 9Z" fill="white" />
+                    <circle cx="9" cy="8" r="1.5" fill="#333" />
+                    <circle cx="15" cy="8" r="1.5" fill="#333" />
+                    <path d="M12 11.5C11.17 11.5 10.5 10.83 10.5 10H13.5C13.5 10.83 12.83 11.5 12 11.5Z" fill="#333" />
+                </svg>
+            </div>
+            <div class="pill-label">CUIDADOR</div>
+            <div class="status-text text-green">DISPONIBLE</div>
+        </div>
+    </button>
+
+</div>
+{% endblock %}

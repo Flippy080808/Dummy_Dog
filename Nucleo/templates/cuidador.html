@@ -1,116 +1,74 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends 'base.html' %}
 {% load static %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cuidador de Mascotas - Dummy Dog</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'global.css' %}">
-    <link rel="stylesheet" href="{% static 'styles_cuidador.css' %}">
-    <style>
-        body { padding-top: 70px; }
-        .navbar-custom { background: var(--primary-green) !important; }
-    </style>
-</head>
 
-<body class="d-flex flex-column min-vh-100">
+{% block title %}Cuidador de Mascotas - Dummy Dog{% endblock %}
 
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-custom shadow-sm fixed-top">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="/">🐶 Dummy Dog</a>
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles_cuidador.css' %}">
+{% endblock %}
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+{% block hero %}
+<div style="background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%); color: white; padding: 40px 20px; text-align: center;">
+    <h1 style="margin: 0; font-size: 32px; font-weight: 700;">Cuidador de Mascotas</h1>
+    <p style="margin: 8px 0 0; opacity: 0.9; font-size: 16px;">Cuida profesional para tu mascota</p>
+</div>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Veterinaria">Veterinaria</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/servicios">Servicios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/productos">Productos</a>
-                    </li>
-                </ul>
-            </div>
+<!-- IMAGEN SUPERIOR -->
+<div class="position-relative w-100 overflow-hidden" style="margin-top: 30px;">
+    <img src="https://placehold.co/800x400/94a3b8/ffffff?text=Cuidador+de+Mascotas"
+         class="w-100 header-img object-fit-cover"
+         style="height: 300px; object-fit: cover;">
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- SECCIÓN VERDE -->
+<section class="bg-success text-white text-center py-5 shadow">
+    <h1 class="display-5 fw-bold">CUIDADOR</h1>
+
+    <p class="h4 fw-semibold mt-3">
+        EMILY JOCELYN VÁZQUEZ QUINTERO
+    </p>
+
+    <p class="h3 fw-bold mt-2">
+        CELULAR: 766 123 2649
+    </p>
+
+    <h2 class="h5 mt-4 pb-1 border-bottom d-inline-block">
+        UBICACIÓN
+    </h2>
+</section>
+
+<!-- MAPA SIMULADO -->
+<section class="p-4">
+    <div class="position-relative w-100 border shadow-lg rounded map-box overflow-hidden" style="height: 400px;">
+
+        <img src="https://placehold.co/800x400/e0e7ff/94a3b8?text=Mapa"
+             class="w-100 h-100 object-fit-cover opacity-75">
+
+        <!-- ICONO CENTRAL -->
+        <div class="position-absolute top-50 start-50 icon-map text-danger fs-1">
+            ●
         </div>
-    </nav>
 
-    <main class="container-fluid">
+        <!-- ETIQUETAS -->
+        <span class="position-absolute top-25 start-25 bg-primary text-white small px-2 py-1 rounded shadow">
+            Mi Bodega Aurora
+        </span>
 
-        <!-- IMAGEN SUPERIOR -->
-        <div class="position-relative w-100 overflow-hidden">
-            <img src="c:\Users\yongo\Downloads\LABS! _.jpeg"
-                 class="w-100 header-img object-fit-cover"
-                 onerror="this.src='https://placehold.co/800x400/94a3b8/ffffff?text=Imagen+No+Disponible';">
-        </div>
+        <span class="position-absolute bottom-25 end-25 bg-warning text-white small px-2 py-1 rounded shadow">
+            Restaurante Las Tres H.
+        </span>
 
-        <!-- SECCIÓN VERDE -->
-        <section class="bg-success text-white text-center py-5 shadow">
-            <h1 class="display-5 fw-bold">CUIDADOR</h1>
+        <span class="position-absolute top-33 end-25 bg-danger text-white small px-2 py-1 rounded shadow">
+            HOSTERÍA DE RÍO-C92
+        </span>
 
-            <p class="h4 fw-semibold mt-3">
-                EMILY JOCELYN VÁZQUEZ QUINTERO
-            </p>
+        <span class="position-absolute bottom-25 start-25 bg-dark text-white small px-2 py-1 rounded shadow">
+            Gutiérrez Zamora
+        </span>
+    </div>
+</section>
 
-            <p class="h3 fw-bold mt-2">
-                CELULAR: 766 123 2649
-            </p>
-
-            <h2 class="h5 mt-4 pb-1 border-bottom d-inline-block">
-                UBICACIÓN
-            </h2>
-        </section>
-
-        <!-- MAPA SIMULADO -->
-        <section class="p-4">
-            <div class="position-relative w-100 border shadow-lg rounded map-box overflow-hidden">
-
-                <img src="c:\Users\yongo\Downloads\AJAAAASSS.png"
-                     class="w-100 h-100 object-fit-cover opacity-75">
-
-                <!-- ICONO CENTRAL -->
-                <div class="position-absolute top-50 start-50 icon-map text-danger fs-1">
-                    ●
-                </div>
-
-                <!-- ETIQUETAS -->
-                <span class="position-absolute top-25 start-25 bg-primary text-white small px-2 py-1 rounded shadow">
-                    Mi Bodega Aurora
-                </span>
-
-                <span class="position-absolute bottom-25 end-25 bg-warning text-white small px-2 py-1 rounded shadow">
-                    Restaurante Las Tres H.
-                </span>
-
-                <span class="position-absolute top-33 end-25 bg-danger text-white small px-2 py-1 rounded shadow">
-                    HOSTERÍA DE RÍO-C92
-                </span>
-
-                <span class="position-absolute bottom-25 start-25 bg-dark text-white small px-2 py-1 rounded shadow">
-                    Gutiérrez Zamora
-                </span>
-            </div>
-        </section>
-
-        <div style="height: 60px;"></div>
-
-    </main>
-
-    <footer class="bg-dark text-white text-center py-3 mt-auto">
-        <p class="mb-0">&copy; 2025 Dummy Dog. Todos los derechos reservados.</p>
-    </footer>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-</html>
+<div style="height: 60px;"></div>
+{% endblock %}

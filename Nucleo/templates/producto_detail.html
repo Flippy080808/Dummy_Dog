@@ -1,115 +1,25 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ producto.nombre }} - Dummy Dog</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'global.css' %}">
-    <style>
-        .navbar-custom { background: var(--primary-green) !important; }
-        .breadcrumb-nav {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 30px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--gray);
-        }
-        .breadcrumb-nav a {
-            color: var(--blue);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        .breadcrumb-nav a:hover {
-            color: var(--dark-blue);
-        }
-        .product-image-container {
-            border-radius: 12px;
-            overflow: hidden;
-            background: var(--gray-light);
-        }
-        .category-pill {
-            display: inline-block;
-            background: var(--yellow);
-            color: var(--gray-dark);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-        .price-box {
-            background: linear-gradient(135deg, var(--light-green) 0%, #f0f8f0 100%);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 24px;
-            border-left: 4px solid var(--primary-green);
-        }
-        .stock-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-        .info-box {
-            background: var(--gray-light);
-            padding: 16px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .info-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 6px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        .info-value {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--primary-green);
-        }
-        .action-buttons {
-            display: flex;
-            gap: 12px;
-        }
-        @media (max-width: 768px) {
-            .product-grid {
-                grid-template-columns: 1fr !important;
-            }
-            .stock-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .action-buttons {
-                flex-direction: column;
-            }
-            .action-buttons .btn {
-                width: 100%;
-            }
-        }
-    </style>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <div class="container">
-            <a class="navbar-brand" href="/">🐶 Dummy Dog</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/Veterinaria">Veterinaria</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/servicios">Servicios</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/carrito" id="navbar-cart">🛒 Carrito</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
+{% block title %}{{ producto.nombre }} - Dummy Dog{% endblock %}
+
+{% block styles %}
+<style>
+    .breadcrumb-nav { display:flex; align-items:center; gap:10px; margin-bottom:30px; padding-bottom:16px; border-bottom:1px solid var(--gray); }
+    .breadcrumb-nav a { color:var(--blue); text-decoration:none; font-weight:500 }
+    .product-image-container{ border-radius:12px; overflow:hidden; background:var(--gray-light) }
+    .category-pill{ display:inline-block; background:var(--yellow); color:var(--gray-dark); padding:6px 14px; border-radius:20px; font-weight:600 }
+    .price-box{ background: linear-gradient(135deg, var(--light-green) 0%, #f0f8f0 100%); padding:20px; border-radius:12px; border-left:4px solid var(--primary-green) }
+    .stock-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px }
+    .info-box{ background:var(--gray-light); padding:16px; border-radius:10px; text-align:center }
+    .info-label{ font-size:12px; color:var(--text-muted); margin-bottom:6px; font-weight:600; text-transform:uppercase }
+    .info-value{ font-size:22px; font-weight:700; color:var(--primary-green) }
+    .action-buttons{ display:flex; gap:12px }
+    @media (max-width:768px){ .product-grid{ grid-template-columns:1fr !important } .action-buttons{ flex-direction:column } }
+</style>
+{% endblock %}
+
+{% block content %}
     <div class="container" style="max-width:1000px;margin:40px auto;padding:0 16px;">
         <div class="breadcrumb-nav">
             <a href="/">🏠 Inicio</a>
@@ -120,8 +30,7 @@
         </div>
 
         <div class="card" style="border:none;box-shadow:0 4px 16px rgba(0,0,0,0.08);">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;padding:32px;product-grid">
-                <!-- Imagen del producto -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;padding:32px;" class="product-grid">
                 <div>
                     <div class="product-image-container">
                         {% if producto.imagen_url %}
@@ -132,40 +41,18 @@
                     </div>
                 </div>
 
-                <!-- Información del producto -->
                 <div>
-                    {% if producto.categoria %}
-                    <span class="category-pill">{{ producto.categoria }}</span>
-                    {% endif %}
-
+                    {% if producto.categoria %}<span class="category-pill">{{ producto.categoria }}</span>{% endif %}
                     <h1 style="font-size:32px;font-weight:700;margin-bottom:8px;color:var(--gray-dark);">{{ producto.nombre }}</h1>
-                    
-                    {% if producto.marca %}
-                    <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px;">
-                        <strong>Marca:</strong> {{ producto.marca }}
-                    </p>
-                    {% endif %}
+                    {% if producto.marca %}<p style="color:var(--text-muted);font-size:14px;margin-bottom:20px;"><strong>Marca:</strong> {{ producto.marca }}</p>{% endif %}
 
-                    <!-- Caja de precio -->
-                    <div class="price-box">
-                        <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px;font-weight:600;">PRECIO</div>
-                        <div style="font-size:36px;font-weight:700;color:var(--primary-green);">${{ producto.precio }}</div>
-                    </div>
+                    <div class="price-box"><div style="font-size:13px;color:var(--text-muted);margin-bottom:8px;font-weight:600;">PRECIO</div><div style="font-size:36px;font-weight:700;color:var(--primary-green);">${{ producto.precio }}</div></div>
 
-                    <!-- Grid de información -->
                     <div class="stock-grid">
-                        <div class="info-box">
-                            <div class="info-label">📦 Disponible</div>
-                            <div class="info-value">{{ producto.inventario }}</div>
-                            <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">unidades en stock</div>
-                        </div>
-                        <div class="info-box">
-                            <div class="info-label">🏥 ID Veterinaria</div>
-                            <div class="info-value">{{ producto.id_veter|default:"—" }}</div>
-                        </div>
+                        <div class="info-box"><div class="info-label">📦 Disponible</div><div class="info-value">{{ producto.inventario }}</div><div style="font-size:11px;color:var(--text-muted);margin-top:6px;">unidades en stock</div></div>
+                        <div class="info-box"><div class="info-label">🏥 ID Veterinaria</div><div class="info-value">{{ producto.id_veter|default:"—" }}</div></div>
                     </div>
 
-                    <!-- Botones de acción -->
                     <div class="action-buttons">
                         <a href="{% url 'editar_producto' producto.pk %}" class="btn btn-primary" style="flex:1;padding:12px;font-size:15px;">✏️ Editar</a>
                         <a href="{% url 'eliminar_producto' producto.pk %}" class="btn btn-danger" style="flex:1;padding:12px;font-size:15px;">🗑️ Eliminar</a>
@@ -176,19 +63,12 @@
             </div>
         </div>
     </div>
+{% endblock %}
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function updateNavbarCart() {
-            const cart = JSON.parse(localStorage.getItem('dummy_dog_cart')) || [];
-            const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-            const cartBtn = document.getElementById('navbar-cart');
-            if (cartBtn) {
-                cartBtn.textContent = count > 0 ? `🛒 Carrito (${count})` : '🛒 Carrito';
-            }
-        }
-        document.addEventListener('DOMContentLoaded', updateNavbarCart);
-        window.addEventListener('storage', updateNavbarCart);
-    </script>
-</body>
-</html>
+{% block scripts %}
+<script>
+    function updateNavbarCart() { const cart = JSON.parse(localStorage.getItem('dummy_dog_cart')) || []; const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0); const cartBtn = document.getElementById('navbar-cart'); if (cartBtn) { cartBtn.textContent = count > 0 ? `🛒 Carrito (${count})` : '🛒 Carrito'; } }
+    document.addEventListener('DOMContentLoaded', updateNavbarCart);
+    window.addEventListener('storage', updateNavbarCart);
+</script>
+{% endblock %}
