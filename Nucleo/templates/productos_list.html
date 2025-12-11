@@ -14,8 +14,18 @@
 {% block hero %}
     <div class="hero">
         <div class="container">
-            <h1>🛍️ Catálogo de Productos</h1>
-            <p>Descubre la mejor selección para tu mascota</p>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+                <div>
+                    <h1 id="hero-title">🛍️ Catálogo de Productos</h1>
+                    <p id="hero-subtitle">Descubre la mejor selección para tu mascota</p>
+                </div>
+                <div>
+                    <div class="btn-group" role="group" aria-label="vista">
+                        <button id="btn-view-products" class="btn btn-outline-dark" type="button">Productos</button>
+                        <button id="btn-view-adopcion" class="btn btn-success" type="button">Adopción</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -24,7 +34,7 @@
     <div class="container" style="margin-bottom:60px;">
         {% if productos %}
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid var(--gray);">
-            <h2 style="margin:0;font-size:20px;font-weight:700;">Total de productos: <span style="color:var(--primary-green);">{{ productos.count }}</span></h2>
+            <h2 id="total-heading" style="margin:0;font-size:20px;font-weight:700;">Total de productos: <span id="total-count" style="color:var(--primary-green);">{{ productos.count }}</span></h2>
         </div>
         <div class="grid">
             {% for p in productos %}
@@ -62,8 +72,192 @@
             <a href="{% url 'agregar_producto' %}" class="btn btn-success" style="padding:12px 24px;font-size:15px;">+ Crear primer producto</a>
         </div>
         {% endif %}
+
+        <!-- Vista Adopción (oculta por defecto) -->
+        <div id="adopcion-view" style="display:none; margin-top:20px;">
+            <h2 style="margin-top:0;font-weight:700;color:var(--primary-green);">Mascotas en Adopción</h2>
+            <div id="adopt-list" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-3">
+                <!-- tarjetas de adopción renderizadas por JS -->
+            </div>
+            <div id="adopt-empty" style="display:none;text-align:center;padding:40px 20px;color:var(--text-muted);">No hay mascotas en adopción.</div>
+        </div>
     </div>
 {% endblock %}
 
-{% block scripts %}{% endblock %}
+{% block scripts %}
+<script>
+    const ADOPT_STORAGE_KEY = 'adopcion_pets';
+
+    function getAdoptPets(){
+        try{
+            const s = localStorage.getItem(ADOPT_STORAGE_KEY);
+            return s ? JSON.parse(s) : [];
+        }catch(e){
+            console.error('Error leyendo adopcion_pets:', e);
+            return [];
+        }
+    }
+
+    function saveAdoptPets(arr){
+        localStorage.setItem(ADOPT_STORAGE_KEY, JSON.stringify(arr));
+    }
+
+    function createAdoptCard(p, idx){
+        const defaultImage = 'https://placehold.co/400x200/718096/E6FFFA?text=No+Foto';
+        const img = p.image && p.image.startsWith('http') ? p.image : defaultImage;
+        return `
+            <div class="col">
+                <div class="pet-card">
+                    <img src="${img}" class="card-img-top" alt="Foto de ${p.name || 'Sin nombre'}" onerror="this.onerror=null;this.src='${defaultImage}'">
+                    <div class="pet-details">
+                        <h5 class="fw-bold mb-1" style="color:var(--text-dark);">${p.name || 'Sin Nombre'}</h5>
+                        <small class="text-muted">${p.breed || 'Mestizo'} | ${p.age || 'Edad no definida'}</small>
+                        <div class="mt-2" style="font-size: 0.9rem;">
+                            <div><strong>Sexo:</strong> ${p.sex || '-'}</div>
+                            <div><strong>Ubicación:</strong> ${p.location || 'No especificada'}</div>
+                        </div>
+                        <p class="text-secondary mt-3 mb-3 small">${(p.desc||'').substring(0, 100) + ((p.desc||'').length > 100 ? '...' : '') || 'Sin descripción.'}</p>
+                        <div style="display:flex;gap:8px;">
+                            <button class="btn btn-sm btn-outline-primary w-100" onclick="openEditAdopt(${idx}); event.stopPropagation();">✏️ Editar</button>
+                            <button class="btn btn-sm btn-danger w-100" onclick="deleteAdopt(${idx}); event.stopPropagation();">🗑️ Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderAdoptList(){
+        const list = document.getElementById('adopt-list');
+        const empty = document.getElementById('adopt-empty');
+        const pets = getAdoptPets();
+        if(!pets || pets.length === 0){
+            list.innerHTML = '';
+            empty.style.display = 'block';
+            return;
+        }
+        empty.style.display = 'none';
+        list.innerHTML = pets.map((p,i)=> createAdoptCard(p,i)).join('');
+    }
+
+    function showAdopcionView(){
+        document.querySelector('.grid').style.display = 'none';
+        const productsEmpty = document.querySelectorAll('[style*="No hay productos registrados"]');
+        // hide no-products block if present
+        const np = document.querySelectorAll('[href*="agregar_producto"]');
+        document.getElementById('adopcion-view').style.display = 'block';
+        document.getElementById('btn-view-adopcion').classList.add('btn-success');
+        document.getElementById('btn-view-adopcion').classList.remove('btn-outline-dark');
+        document.getElementById('btn-view-products').classList.remove('btn-success');
+        document.getElementById('btn-view-products').classList.add('btn-outline-dark');
+        // actualizar texto del hero
+        const ht = document.getElementById('hero-title');
+        const hs = document.getElementById('hero-subtitle');
+        if(ht) ht.innerText = '📣 Catálogo de Adopción';
+        if(hs) hs.innerText = 'Explora mascotas que buscan un hogar';
+        // actualizar contador a total de perros
+        const th = document.getElementById('total-heading');
+        if(th){
+            const pets = getAdoptPets();
+            th.innerHTML = 'Total de perros: <span id="total-count" style="color:var(--primary-green);">' + (pets?pets.length:0) + '</span>';
+        }
+        renderAdoptList();
+    }
+
+    function showProductsView(){
+        // restore products grid visibility
+        const grid = document.querySelector('.grid');
+        if(grid) grid.style.display = '';
+        document.getElementById('adopcion-view').style.display = 'none';
+        document.getElementById('btn-view-products').classList.add('btn-success');
+        document.getElementById('btn-view-products').classList.remove('btn-outline-dark');
+        document.getElementById('btn-view-adopcion').classList.remove('btn-success');
+        document.getElementById('btn-view-adopcion').classList.add('btn-outline-dark');
+        // restaurar texto del hero
+        const ht = document.getElementById('hero-title');
+        const hs = document.getElementById('hero-subtitle');
+        if(ht) ht.innerText = '🛍️ Catálogo de Productos';
+        if(hs) hs.innerText = 'Descubre la mejor selección para tu mascota';
+        // restaurar contador original
+        const th = document.getElementById('total-heading');
+        if(th && th.dataset && th.dataset.orig) th.innerHTML = th.dataset.orig;
+    }
+
+    // Edit flow: simple modal-like prompt sequence (keeps UI lightweight)
+    let currentEditIndex = null;
+
+    function openEditAdopt(idx){
+        const pets = getAdoptPets();
+        const p = pets[idx];
+        if(!p) return alert('Entrada no encontrada');
+        currentEditIndex = idx;
+        // Build a small prompt-driven edit form using a modal-like overlay
+        const overlay = document.createElement('div');
+        overlay.style.position = 'fixed';
+        overlay.style.inset = '0';
+        overlay.style.background = 'rgba(0,0,0,0.4)';
+        overlay.style.zIndex = '9999';
+        overlay.id = 'adopt-edit-overlay';
+        overlay.innerHTML = `
+            <div style="max-width:720px;margin:60px auto;background:white;border-radius:12px;padding:20px;">
+                <h4 style="margin-top:0;color:var(--text-dark);">Editar ficha de ${p.name || 'Sin nombre'}</h4>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;">
+                    <input id="e_name" class="form-control" placeholder="Nombre" value="${(p.name||'').replace(/"/g,'&quot;')}">
+                    <input id="e_breed" class="form-control" placeholder="Raza" value="${(p.breed||'').replace(/"/g,'&quot;')}">
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;">
+                    <select id="e_sex" class="form-select"><option value="">--Sexo--</option><option value="Macho">Macho</option><option value="Hembra">Hembra</option></select>
+                    <input id="e_age" class="form-control" placeholder="Edad" value="${(p.age||'').replace(/"/g,'&quot;')}">
+                </div>
+                <input id="e_image" class="form-control" placeholder="URL imagen" value="${(p.image||'').replace(/"/g,'&quot;')}">
+                <textarea id="e_desc" class="form-control" rows="3" style="margin-top:8px;">${(p.desc||'').replace(/</g,'&lt;')}</textarea>
+                <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-end;">
+                    <button id="e_cancel" class="btn btn-secondary">Cancelar</button>
+                    <button id="e_save" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+        // set sex value
+        const sel = document.getElementById('e_sex'); if(sel) sel.value = p.sex || '';
+        document.getElementById('e_cancel').addEventListener('click', ()=>{ document.getElementById('adopt-edit-overlay').remove(); });
+        document.getElementById('e_save').addEventListener('click', ()=>{
+            const pets2 = getAdoptPets();
+            pets2[currentEditIndex] = {
+                ...pets2[currentEditIndex],
+                name: document.getElementById('e_name').value.trim(),
+                breed: document.getElementById('e_breed').value.trim(),
+                sex: document.getElementById('e_sex').value,
+                age: document.getElementById('e_age').value.trim(),
+                image: document.getElementById('e_image').value.trim(),
+                desc: document.getElementById('e_desc').value.trim()
+            };
+            saveAdoptPets(pets2);
+            document.getElementById('adopt-edit-overlay').remove();
+            renderAdoptList();
+            alert('Ficha actualizada');
+        });
+    }
+
+    function deleteAdopt(idx){
+        if(!confirm('¿Eliminar esta ficha de adopción? Esta acción no se puede deshacer.')) return;
+        const pets = getAdoptPets();
+        pets.splice(idx,1);
+        saveAdoptPets(pets);
+        renderAdoptList();
+    }
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+        const btnA = document.getElementById('btn-view-adopcion');
+        const btnP = document.getElementById('btn-view-products');
+        if(btnA) btnA.addEventListener('click', ()=> showAdopcionView());
+        if(btnP) btnP.addEventListener('click', ()=> showProductsView());
+        // initialize buttons state
+        if(btnP) btnP.classList.add('btn-success');
+        // almacenar HTML original del contador para restaurarlo luego
+        const th = document.getElementById('total-heading');
+        if(th && !th.dataset.orig) th.dataset.orig = th.innerHTML;
+    });
+</script>
+{% endblock %}
 
